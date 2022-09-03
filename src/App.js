@@ -1,21 +1,47 @@
-import view from './view.svg';
 import google from './google.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState, useMemo } from 'react';
 const WEAK = 'Weak'
 const MEDIUM = 'Medium'
 const STRONG = 'Strong'
 const STRONGER = 'Stronger'
 const BEST = 'Best'
+const METER_DISABLED = 'meter-bar'
+const METER_ACTIVE = 'meter-bar active'
 
 function App() {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [pswd, setPswd] = useState('')
   const [pswdStatus, setPswdStatus] = useState('Weak')
-  useEffect(() => {
 
-  }, [])
+  const meterMedium = useMemo(() => {
+    if (pswdStatus != WEAK)
+      return METER_ACTIVE
+    else
+      return METER_DISABLED
+  }, [pswdStatus])
+
+  const meterStrong = useMemo(() => {
+    if (pswdStatus == STRONG || pswdStatus == STRONGER || pswdStatus == BEST)
+      return METER_ACTIVE
+    else
+      return METER_DISABLED
+  })
+
+  const meterStronger = useMemo(() => {
+    if (pswdStatus == STRONGER || pswdStatus == BEST)
+      return METER_ACTIVE
+    else
+      return METER_DISABLED
+  })
+
+  const meterBest = useMemo(() => {
+    if (pswdStatus == BEST)
+      return METER_ACTIVE
+    else
+      return METER_DISABLED
+  })
 
   const handleCreatePswd = (e) => {
     const newPswd = e.target.value
@@ -32,8 +58,6 @@ function App() {
     } else {
       setPswdStatus(BEST)
     }
-
-
   }
 
   return (
@@ -53,11 +77,11 @@ function App() {
             </div>
 
             <div className='meter'>
-              <div className='meter-bar'></div>
-              <div className='meter-bar'></div>
-              <div className='meter-bar'></div>
-              <div className='meter-bar'></div>
-              <div className='meter-bar'></div>
+              <div className={METER_ACTIVE}></div>
+              <div className={meterMedium}></div>
+              <div className={meterStrong}></div>
+              <div className={meterStronger}></div>
+              <div className={meterBest}></div>
               <span className='meter-status'>{pswdStatus}</span>
             </div>
 
@@ -76,8 +100,6 @@ function App() {
             <p className='highlight login'>Already have a Scribbles AI account? Log in</p>
 
           </div>
-
-
         </div>
 
       </header>
