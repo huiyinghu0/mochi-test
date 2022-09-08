@@ -1,6 +1,8 @@
 import google from './google.svg';
 import './App.css';
 import { useState, useMemo } from 'react';
+import SignupTitle from './components/SignupTitle';
+
 const WEAK = 'Weak'
 const MEDIUM = 'Medium'
 const STRONG = 'Strong'
@@ -68,7 +70,7 @@ function App() {
             Scribbles AI
           </p>
           <div className='signup-wrapper'>
-            <p className='signup-title'>Sign up to your account</p>
+            <SignupTitle />
             <input className='input' placeholder='Your email' value={email} onChange={e => { setEmail(e.target.value) }} />
             <input className='input' placeholder='Your name' value={name} onChange={e => { setName(e.target.value) }} />
             <div className='input-wrapper'>
